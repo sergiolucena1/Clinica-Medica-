@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
@@ -31,25 +32,10 @@ public class TokenService {
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    //public String gerarToken(UserModel usuario){
-
-//        return JWT.create()
-//                .withClaim("roles", usuario.getRoles().stream()
-//                        .map( u -> u.getRoleName().toString())
-//                        .toList())
-//                .withSubject(usuario.getUsername())
-//                .withIssuer("alunoOline")
-//                .withExpiresAt(Date.from(LocalDateTime.now()
-//                        .plusMinutes(10)
-//                        .toInstant(ZoneOffset.of("-03:00"))))
-//                .sign(Algorithm.HMAC256("secreta"));
-
-   // }
-
     public TokenDto gerarToken(UserModel usuario) {
 
         List<String> roles = usuario.getRoles().stream()
-                .map( u -> u.getRoleName().toString()).toList();
+                .map( u -> u.getRoleName().toString()).collect(Collectors.toList());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -62,26 +48,26 @@ public class TokenService {
     private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
         String issuerUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath().build().toUriString()
-                + "/alunoOnline";
+                + "/ClinicaV1";
         return JWT.create()
-                .withClaim("listaPerfeil", roles)
+                .withClaim("listaPerfeil", (Date) roles)
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withSubject(username)
                 .withIssuer(issuerUrl)
                 .sign(algorithm)
-                .strip();
+                .trim();
     }
 
     private String getRefreshToken(String username, List<String> roles, Date now) {
         Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
-                .withClaim("roles", roles)
+                .withClaim("roles", (Date) roles)
                 .withIssuedAt(now)
                 .withExpiresAt(validityRefreshToken)
                 .withSubject(username)
                 .sign(algorithm)
-                .strip();
+                .trim();
     }
 
     public String getSubject(String token) {

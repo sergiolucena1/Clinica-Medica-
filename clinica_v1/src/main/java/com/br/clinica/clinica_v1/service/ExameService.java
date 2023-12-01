@@ -1,21 +1,23 @@
 package com.br.clinica.clinica_v1.service;
 
-import com.br.clinica.clinica_v1.entity.Exame;
 import com.br.clinica.clinica_v1.repository.ExameRepository;
+import com.br.clinica.clinica_v1.entity.Exame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+@Service
 public class ExameService {
 
     @Autowired
-    DisciplinaRepository repository;
+    ExameRepository repository;
 
-    public Disciplina create(Disciplina disciplina) {
-        return repository.save(disciplina);
+    public Exame create(Exame exame) {
+        return repository.save(exame);
     }
 
-    public List<Disciplina> getByProfessorId(Long professorId) {
+    public List<Exame> getByMedicoId(Long medicoId) {
 
-        return repository.findByProfessorId(professorId);
+        return repository.findByMedicoId(medicoId);
+    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class HistoriocoPacienteDTO {
-    private String nomeAluno;
+    private String nomePaciente;
     private Consulta consulta;
     private List<PacienteConsulta> pacienteConsultaList;
 }

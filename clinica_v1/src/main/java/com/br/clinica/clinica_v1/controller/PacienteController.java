@@ -29,7 +29,7 @@ public class PacienteController {
         return service.listaPorNome(nome);
     }
 
-    @GetMapping("/listar-aluno-diciplina/{idDiciplina}")
+    @GetMapping("/listar-paciente-consulta/{idConsulta}")
     @ResponseStatus(HttpStatus.OK)
     public List<Paciente> listarPacienteConsulta(@PathVariable Long idDiciplina) {
         return service.listarPacienteConsulta(idDiciplina);

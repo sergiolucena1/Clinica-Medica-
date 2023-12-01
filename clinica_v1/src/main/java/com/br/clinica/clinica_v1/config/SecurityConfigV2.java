@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.Filter;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigV2 {
@@ -31,8 +33,8 @@ public class SecurityConfigV2 {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/alunos/**").hasRole("USER")
-                .antMatchers("/matricula-aluno/**").hasRole("ADMIN")
+                .antMatchers("/pacientes/**").hasRole("USER")
+                .antMatchers("/cpf-pacientes/**").hasRole("ADMIN")
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
@@ -40,7 +42,7 @@ public class SecurityConfigV2 {
 //                .formLogin()
 //                .defaultSuccessUrl("/swagger-ui/index.html").permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);;
+                .and().addFilterBefore((Filter) filter, (Class<? extends Filter>) UsernamePasswordAuthenticationFilter.class);;
         return http.build();
     }
 
