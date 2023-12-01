@@ -19,7 +19,7 @@ public class PacienteController {
 
     @GetMapping("/listar-todos")
     @ResponseStatus(HttpStatus.OK)
-    public List<Paciente> findAll() {
+    public List<Package> findAll() {
         return service.listaTodos();
     }
 
@@ -53,7 +53,7 @@ public class PacienteController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Paciente> findById(@PathVariable Long id) {
+    public Optional<Package> findById(@PathVariable Long id) {
         return service.findById(id);
     }
 

@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/curso")
+@RequestMapping("/consulta")
 public class ConsultaController {
 
     @Autowired
@@ -34,6 +36,7 @@ public class ConsultaController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Optional<Consulta> findById(@PathVariable Long id) {
         return service.findById(id);
     }

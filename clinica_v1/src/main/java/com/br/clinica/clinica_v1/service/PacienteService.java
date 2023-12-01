@@ -15,27 +15,29 @@ public class PacienteService {
     @Autowired
     PacienteReprository repository;
 
-    public Paciente create(Paciente paciente){
-        return null;
+    public Paciente create(Paciente paciente) {
+        return repository.save(paciente);
     }
 
-    public Optional<Paciente> findById(Long id){
-        return null;
+    public Optional<Package> findById(Long id) {
+        return repository.findById(id);
     }
 
-    public void delete(Long id){
-        repository.deleteById(id);
+
+    public List<Package> listaTodos() {
+        return repository.findAll();
     }
 
     public List<Paciente> listaPorNome(String nome) {
-        return null;
-    }
-
-    public List<Paciente> listaTodos() {
-        return null;
+        return repository.findByNomeContainsIgnoreCase(nome);
     }
 
     public List<Paciente> listarPacienteConsulta(Long idDiciplina) {
-        return null;
+        return repository.listaPacienteConsulta(idDiciplina);
     }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
 }
